@@ -1,8 +1,10 @@
-const autoprefixer = require('autoprefixer');
-const pxtorem = require('postcss-pxtorem');
+const autoprefixer = require("autoprefixer");
+const pxtorem = require("postcss-pxtorem");
+const webpack = require("webpack");
 module.exports = {
   outputDir: "dist",
-  publicPath: process.env.NODE_ENV === "production" ? "/vant-demo/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
+  lintOnSave: false,
   devServer: {
     port: 8367,
     https: false,
@@ -10,21 +12,21 @@ module.exports = {
     disableHostCheck: true,
   },
   pwa: {
-    name: 'ifredom PWA App',
-    themeColor: '#4DBA87',
-    msTileColor: '#000000',
-    appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
+    name: "ifredom PWA App",
+    themeColor: "#4DBA87",
+    msTileColor: "#000000",
+    appleMobileWebAppCapable: "yes",
+    appleMobileWebAppStatusBarStyle: "black",
     // configure the workbox plugin
-    workboxPluginMode: 'InjectManifest',
+    workboxPluginMode: "InjectManifest",
     workboxOptions: {
       // swSrc is required in InjectManifest mode.
-      swSrc: 'src/registerServiceWorker.js'
+      swSrc: "src/registerServiceWorker.js",
       // ...other Workbox options...
-    }
+    },
   },
   // 构建时开启多进程处理 babel 编译
-  parallel: require('os').cpus().length > 1,
+  parallel: require("os").cpus().length > 1,
   css: {
     loaderOptions: {
       postcss: {
@@ -32,10 +34,19 @@ module.exports = {
           autoprefixer(),
           pxtorem({
             rootValue: 37.5,
-            propList: ['*']
-          })
-        ]
-      }
-    }
-  }
+            propList: ["*"],
+          }),
+        ],
+      },
+    },
+  },
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "windows.jQuery": "jquery",
+      }),
+    ],
+  },
 };

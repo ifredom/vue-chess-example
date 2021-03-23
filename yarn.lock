@@ -868,6 +868,13 @@
     "lodash" "^4.17.19"
     "to-fast-properties" "^2.0.0"
 
+"@chrisoakman/chessboardjs@^1.0.0":
+  "integrity" "sha1-LPwzmb7V6ZM72NAupLQF4hoLYRs="
+  "resolved" "https://registry.npm.taobao.org/@chrisoakman/chessboardjs/download/@chrisoakman/chessboardjs-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "jquery" ">=3.4.1"
+
 "@hapi/address@2.x.x":
   "integrity" "sha1-XWftQ/P9QaadS5/3tW58DR0KgeU="
   "resolved" "https://registry.npm.taobao.org/@hapi/address/download/@hapi/address-2.1.4.tgz"
@@ -2466,6 +2473,11 @@
   "integrity" "sha1-M1bMoZyIlUTy16le1JzlCKDs9VI="
   "resolved" "https://registry.npm.taobao.org/check-types/download/check-types-8.0.3.tgz?cache=0&sync_timestamp=1579455903027&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcheck-types%2Fdownload%2Fcheck-types-8.0.3.tgz"
   "version" "8.0.3"
+
+"chess.js@^0.11.0":
+  "integrity" "sha1-4YAheblE6rXa8RtdS84Izcrb7/o="
+  "resolved" "https://registry.npm.taobao.org/chess.js/download/chess.js-0.11.0.tgz"
+  "version" "0.11.0"
 
 "chokidar@^2.1.8":
   "integrity" "sha1-gEs6e2qZNYw8XGHnHYco8EHP+Rc="
@@ -5180,6 +5192,11 @@
   dependencies:
     "merge-stream" "^2.0.0"
     "supports-color" "^7.0.0"
+
+"jquery@^3.6.0", "jquery@>=3.4.1":
+  "integrity" "sha1-xyoJ8Vwb3OFC9J2/EXC9+K2sJHA="
+  "resolved" "https://registry.npm.taobao.org/jquery/download/jquery-3.6.0.tgz?cache=0&sync_timestamp=1614705639458&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjquery%2Fdownload%2Fjquery-3.6.0.tgz"
+  "version" "3.6.0"
 
 "js-base64@^2.1.9":
   "integrity" "sha1-9OaGxd4eofhn28rT1G2WlCjfmMQ="
