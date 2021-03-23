@@ -40,12 +40,22 @@ module.exports = {
       },
     },
   },
+  chainWebpack: config => {
+    // 使用cdn文件，忽略打包。会导致调试工具无法开启
+    // config.externals({
+    //   "jquery": "$",
+    //   "jquery": "jQuery",
+    //   "chess": "chess",
+    //   "Chessboard": "Chessboard",
+    // });
+  },
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery",
         "windows.jQuery": "jquery",
+        "window.Chessboard": "Chessboard",
       }),
     ],
   },

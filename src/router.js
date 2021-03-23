@@ -9,10 +9,17 @@ const routes = [
     redirect: '/goods'
   },
   {
-    name: 'goods',
-    component: () => import('./view/goods'),
+    name: 'home',
+    component: () => import('./view/home'),
     meta: {
-      title: '商品详情'
+      title: '主页'
+    }
+  },
+  {
+    name: 'chessboard',
+    component: () => import('./view/home'),
+    meta: {
+      title: '棋盘元素'
     }
   }
 ];
