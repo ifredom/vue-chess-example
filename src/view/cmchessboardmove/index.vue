@@ -7,10 +7,12 @@
 
 <script>
 import "cm-chessboard/styles/cm-chessboard.css";
+import Chess from "chess.js";
 import {
-  Chessboard as cmChessboard,
+  Chessboard,
   MOVE_INPUT_MODE,
   INPUT_EVENT_TYPE,
+  COLOR,
 } from "cm-chessboard";
 import {
   WebChessSocket,
@@ -18,7 +20,7 @@ import {
   SocketReceiveMessage,
 } from "@/utils/WebChessSocket";
 export default {
-  name: "CmChessboard",
+  name: "cmchessboardmove",
   components: {},
   props: {
     authenticated: {
@@ -32,51 +34,57 @@ export default {
   data() {
     return {
       color: "white", // black
-      board: null
+      board: null,
+      fen: "start",
+      history: [],
     };
   },
+  created() {
+    this.board = null;
+    this.game = null;
+  },
   mounted() {
-    // if (!this.authenticated) return this.$router.push({ name: "home" });
     this.onceAuthenticated();
   },
   methods: {
     onceAuthenticated() {
       this.setBoard();
-      this.setUpSocket();
     },
-    //
-    // https://github.com/WonJunior/webchess/blob/dc995650eb725561b1665de0737b720a5b791901/client/src/views/Chessboard.vue
     setBoard() {
-      this.board = new cmChessboard(this.$refs.board, {
-        position: "start",
-        sprite: { url: "./chessboard-sprite.svg" },
+      this.game = new Chess();
+      this.board = new Chessboard(document.getElementById("board"), {
+        position: this.game.fen(),
+        orientation: COLOR.white,
+        moveInputMode: MOVE_INPUT_MODE.dragPiece,
+        responsive: true,
+        sprite: {
+          url: "./chessboard-sprite.svg", // pieces and markers are stored as svg in the sprite
+          grid: 40, // the sprite is tiled with one piece every 40px
+        },
       });
       this.board.enableMoveInput((event) => {
-        console.log(event);
         switch (event.type) {
           case INPUT_EVENT_TYPE.moveStart:
             return true;
           case INPUT_EVENT_TYPE.moveDone:
-            this.socket.emit(SocketEmitMessage.MOVE, {
+            const move = this.game.move({
               from: event.squareFrom,
               to: event.squareTo,
+              promotion: "q",
+            });
+
+            if (move === null) return;
+
+            this.fen = this.game.fen();
+            this.history = this.game.history({ verbose: true });
+
+            setTimeout(() => {
+              event.chessboard.setPosition(this.game.fen());
             });
             return true;
           case INPUT_EVENT_TYPE.moveCanceled:
             return null;
         }
-      });
-    },
-    setUpSocket() {
-      this.socket.on(SocketReceiveMessage.YOURTURN, (state) => {
-        console.log("My turn!", state);
-        this.board.setPosition(state);
-        // this.board.setFEN(state)
-      });
-      this.socket.on(SocketReceiveMessage.INVALIDATE, (state) => {
-        console.log("Invalid move! reseting to ", state);
-        this.board.setPosition(state);
-        // this.setBoard(state)
       });
     },
   },
