@@ -2700,10 +2700,10 @@
   "resolved" "https://registry.npm.taobao.org/clone/download/clone-2.1.2.tgz"
   "version" "2.1.2"
 
-"cm-chessboard@^2.15.7":
-  "integrity" "sha512-fWZbRNuLFMFEKsyvYbbDhswMzxJXoJ1C+A1898UeDOES7jP0/q1IkzN4BJ1CxiT+ruECmZq9Hk9txUKjHoVPqw=="
-  "resolved" "https://registry.npmjs.org/cm-chessboard/-/cm-chessboard-2.15.7.tgz"
-  "version" "2.15.7"
+"cm-chessboard@^3.9.14":
+  "integrity" "sha512-Xwto2H+H5NOBui5+sP/aMfqNRmmVjp2z6toMEQ3Ri+uKttMZz6dPPgSPRtVKbesXjeyz8bQE8xuX19/oAypaGw=="
+  "resolved" "https://registry.npmjs.org/cm-chessboard/-/cm-chessboard-3.9.14.tgz"
+  "version" "3.9.14"
 
 "co@^4.6.0":
   "integrity" "sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ="
