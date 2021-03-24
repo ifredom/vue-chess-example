@@ -28,6 +28,7 @@ yarn lint
 ## 开发须知
 
 **README-development.md** 文件
+* vue-socket.io 只能在npm源下载，taobao镜像下载失败
 
 ### 走棋规则
 
@@ -60,3 +61,4 @@ yarn lint
 * [一步一步js简单AI](https://segmentfault.com/a/1190000009143078)
 * [实战 Flutter 象棋从零到上架](https://blog.csdn.net/tosmart/category_10400600.html)
 * [stockfish.js](https://github.com/nmrugg/stockfish.js)
+* [chessground棋盘](https://github.com/ornicar/chessground#readme)

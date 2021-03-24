@@ -1,6 +1,12 @@
+const path = require("path");
 const autoprefixer = require("autoprefixer");
 const pxtorem = require("postcss-pxtorem");
 const webpack = require("webpack");
+
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
+
 module.exports = {
   outputDir: "dist",
   publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
@@ -40,7 +46,7 @@ module.exports = {
       },
     },
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     // 使用cdn文件，忽略打包。会导致调试工具无法开启
     // config.externals({
     //   "jquery": "$",
@@ -48,6 +54,11 @@ module.exports = {
     //   "chess": "chess",
     //   "Chessboard": "Chessboard",
     // });
+    // 添加别名
+    config.resolve.alias
+      .set("@", resolve("src"))
+      .set("@assets", resolve("src/assets"))
+      .set("@com", resolve("src/components"));
   },
   configureWebpack: {
     plugins: [
@@ -55,7 +66,6 @@ module.exports = {
         $: "jquery",
         jQuery: "jquery",
         "windows.jQuery": "jquery",
-        "window.Chessboard": "Chessboard",
       }),
     ],
   },

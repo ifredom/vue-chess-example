@@ -1,26 +1,41 @@
 <template>
-  <div class="chess">
-    <div id="myBoard" style="width: 400px"></div>
-    <div>chess页面</div>
+  <div class="home">
+    <chessboard></chessboard>
+    <!-- <chessground></chessground> -->
+    <!-- <cmchessboard :socket="socket"></cmchessboard> -->
   </div>
 </template>
 
 <script>
+import chessboard from "../chessboardelement";
+import chessground from "../chessground";
+import cmchessboard from "../cmchessboard";
+
+import {
+  WebChessSocket
+} from "@/utils/WebChessSocket";
+
+// cmchessboard 参考 cankao-webchess-master项目
 export default {
-  components: {  },
+  name: "home",
+  components: {
+    chessboard,
+    chessground,
+    cmchessboard,
+  },
   data() {
-    return {};
+    return {
+      socket: null,
+    };
   },
-  mounted() {
-    console.log(window);
-    var board = Chessboard("myBoard");
+  created() {
+    this.authenticate();
   },
-  methods: {},
+  methods: {
+    authenticate() {
+      const token = "ifredom"
+      this.socket = new WebChessSocket(token);
+    },
+  },
 };
 </script>
-
-<style lang="less" scope>
-#chess-board {
-  width: 400px;
-}
-</style>
