@@ -1,12 +1,12 @@
 # chess-internatinal ( 国际象棋 )
 
 - 1. 移动版H5，自我对弈  （√）
-- 2. 人机对弈
+- 2. 人机对弈 （√）
 - 3. 搭建后台服务，联网对战  
 
 
-人机 AI参考 1. https://segmentfault.com/a/1190000009143078
-人机 AI参考 2. https://jsfiddle.net/Laa0p1mh/3/
+[人机 AI参考1.](https://segmentfault.com/a/1190000009143078)
+[人机 AI参考2.](https://jsfiddle.net/Laa0p1mh/3/)
 
 服务器参考：项目 cankao-webchess-master
 ## 简易AI涉及算法

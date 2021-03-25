@@ -61,7 +61,7 @@ export default {
       this.chessEngine.setPosition();
     },
     makeRandomMove() {
-      this.chessEngine.loopMakeRandomMove()
+      this.chessEngine.loopMakeMove()
     },
   },
 };

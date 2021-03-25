@@ -88,9 +88,11 @@ export default class ChessEngine {
             setTimeout(() => {
               event.chessboard.setPosition(this.game.fen());
             });
-            this.makeRandomMove();
+
+            var bestPiece = this.calculateBestMove(this.game);
+            console.log(bestPiece);
+            this.makeMove();
           } else {
-            
           }
 
           return true;
@@ -152,39 +154,45 @@ export default class ChessEngine {
    *
    * * 设置一个棋子
    */
-  makeRandomMove() {
+  makePieceMove(piece = "bn") {
     this.board.setPiece("e4", PIECE.blackKnight);
-    this.board.setPiece("e4", "bn");
+    this.board.setPiece("e4", piece);
   }
   /**
    *
-   * * 随机走一步棋
+   * * 生成随机步数
    */
-  makeRandomMove() {
+  makeRandomPieceMove() {
     var possibleMoves = this.game.moves();
-    var that = this;
-    // exit if the this.game is over
+    // 游戏结束则退出
     if (this.game.game_over()) return;
-
     var randomIdx = Math.floor(Math.random() * possibleMoves.length);
-    this.game.move(possibleMoves[randomIdx]);
+    return possibleMoves[randomIdx];
+  }
+  /**
+   *
+   * * 走一步棋
+   */
+  makeMove(bestPiece) {
+    var randomPiece = bestPiece ? bestPiece : this.makeRandomPieceMove();
+    this.game.move(randomPiece);
     this.board.setPosition(this.game.fen());
   }
   /**
    *
    * * 循环随机走棋
    */
-  loopMakeRandomMove() {
-    var that = this
+  loopMakeMove() {
+    var that = this;
     window.setTimeout(() => {
-      that.makeRandomMove();
+      that.makeMove();
     }, 500);
   }
 
   // 开发最佳下棋的算法
   calculateBestMove(game) {
     //generate all the moves for a given position
-    var newGameMoves = game.ugly_moves();
+    var newGameMoves = game.moves();
     return newGameMoves[Math.floor(Math.random() * newGameMoves.length)];
   }
 }
