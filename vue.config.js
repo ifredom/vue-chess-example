@@ -11,6 +11,7 @@ module.exports = {
   outputDir: "dist",
   publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
   lintOnSave: false,
+  productionSourceMap: true,
   devServer: {
     port: 8367,
     https: false,
@@ -65,18 +66,18 @@ module.exports = {
     entry.add("babel-polyfill").end();
     entry.add("classlist-polyfill").end();
 
-        // 处理所有svg图片
-        config.module.rules.delete("svg"); // 重点:删除默认配置中处理svg,
-        config.module
-          .rule("svg-sprite-loader")
-          .test(/\.svg$/)
-          .include.add(resolve("src/icons")) // 处理svg目录
-          .end()
-          .use("svg-sprite-loader")
-          .loader("svg-sprite-loader")
-          .options({
-            symbolId: "icon-[name]"
-          });
+    // 处理所有svg图片
+    config.module.rules.delete("svg"); // 重点:删除默认配置中处理svg,
+    config.module
+      .rule("svg-sprite-loader")
+      .test(/\.svg$/)
+      .include.add(resolve("src/icons")) // 处理svg目录
+      .end()
+      .use("svg-sprite-loader")
+      .loader("svg-sprite-loader")
+      .options({
+        symbolId: "icon-[name]",
+      });
   },
   configureWebpack: {
     plugins: [

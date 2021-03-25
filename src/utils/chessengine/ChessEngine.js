@@ -5,11 +5,13 @@ import {
   INPUT_EVENT_TYPE,
   COLOR,
   BORDER_TYPE,
+  MARKER_TYPE,
   PIECE,
 } from "cm-chessboard";
 // import History from "./history";
 import Handle from "./handel";
 import ChessAi from "./ai";
+
 export default class ChessEngine {
   constructor(el) {
     this.$el = el;
@@ -35,7 +37,7 @@ export default class ChessEngine {
     this.board = new Chessboard(el, {
       position: this.game.fen(),
       sprite: {
-        url: "./chessboard-sprite.svg",
+        url: "./chessboard-sprite-staunty.svg",
         grid: 40, // size
       },
       // responsive: true,
@@ -60,9 +62,10 @@ export default class ChessEngine {
     });
     var chessAi = (this.chessAi = new ChessAi(this.game, this.board));
 
-    this.board.enableBoardClick((event) => {
-      console.log("boardClick board", event);
-    });
+    console.log(this.board);
+    // this.board.enableBoardClick((event) => {
+    //   console.log("boardClick board", event);
+    // });
 
     this.board.enableMoveInput((event) => {
       switch (event.type) {
