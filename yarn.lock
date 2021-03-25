@@ -875,6 +875,11 @@
   dependencies:
     "jquery" ">=3.4.1"
 
+"@fortawesome/fontawesome-free@^5.15.2":
+  "integrity" "sha512-rFnSUN/QOtnOAgqFRooTA3H57JLDm0QEG/jPdk+tLQNL/eWd+Aok8g3qCI+Q1xuDPWpGW/i9JySpJVsq8Q0s9w=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.3.tgz"
+  "version" "5.15.3"
+
 "@hapi/address@2.x.x":
   "integrity" "sha1-XWftQ/P9QaadS5/3tW58DR0KgeU="
   "resolved" "https://registry.npm.taobao.org/@hapi/address/download/@hapi/address-2.1.4.tgz"
@@ -2127,6 +2132,20 @@
   "resolved" "https://registry.npm.taobao.org/boolbase/download/boolbase-1.0.0.tgz"
   "version" "1.0.0"
 
+"bootstrap-show-modal@^1.4.2":
+  "integrity" "sha512-Ih9wFn1LfLO3scBvBuBkc4t1OKweLQHjLzJZP/MDU4/ASbq7PG6avB0M8otChjltXT+/4kHqFvvetA/hH+283A=="
+  "resolved" "https://registry.npmjs.org/bootstrap-show-modal/-/bootstrap-show-modal-1.4.2.tgz"
+  "version" "1.4.2"
+  dependencies:
+    "bootstrap" "^4.5.3"
+    "jquery" "^3.5.1"
+    "popper.js" "^1.16.1"
+
+"bootstrap@^4.5.3", "bootstrap@^4.6.0":
+  "integrity" "sha512-Io55IuQY3kydzHtbGvQya3H+KorS/M9rSNyfCGCg9WZ4pyT/lCxIlpJgG1GXW/PswzC84Tr2fBYi+7+jFVQQBw=="
+  "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-4.6.0.tgz"
+  "version" "4.6.0"
+
 "brace-expansion@^1.1.7":
   "integrity" "sha1-PH/L9SnYcibz0vUrlm/1Jx60Qd0="
   "resolved" "https://registry.npm.taobao.org/brace-expansion/download/brace-expansion-1.1.11.tgz?cache=0&sync_timestamp=1614010785257&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbrace-expansion%2Fdownload%2Fbrace-expansion-1.1.11.tgz"
@@ -2504,6 +2523,22 @@
   "resolved" "https://registry.npm.taobao.org/check-types/download/check-types-8.0.3.tgz?cache=0&sync_timestamp=1579455903027&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcheck-types%2Fdownload%2Fcheck-types-8.0.3.tgz"
   "version" "8.0.3"
 
+"chess-console@^4.4.2":
+  "integrity" "sha512-LRZPisFSwEmSxXQJWoxT5JTug2gUcsbC4znKru6sTrbDNiOZyRnT/yJPJ8B+7SrMmzWuJMiqEki5AuTRfVC3dw=="
+  "resolved" "https://registry.npmjs.org/chess-console/-/chess-console-4.4.2.tgz"
+  "version" "4.4.2"
+  dependencies:
+    "@fortawesome/fontawesome-free" "^5.15.2"
+    "bootstrap" "^4.6.0"
+    "bootstrap-show-modal" "^1.4.2"
+    "chess.mjs" "^1.1.1"
+    "cm-chess" "^1.3.17"
+    "cm-chessboard" "^3.3.8"
+    "cm-pgn" "^1.7.5"
+    "cm-web-modules" "^1.6.7"
+    "jquery" "^3.5.1"
+    "popper.js" "^1.16.1"
+
 "chess.js@^0.10.2":
   "integrity" "sha1-jDuY6EEcL/OrSx/AIt3r0a4DcSA="
   "resolved" "https://registry.npm.taobao.org/chess.js/download/chess.js-0.10.3.tgz"
@@ -2513,6 +2548,11 @@
   "integrity" "sha1-4YAheblE6rXa8RtdS84Izcrb7/o="
   "resolved" "https://registry.npm.taobao.org/chess.js/download/chess.js-0.11.0.tgz"
   "version" "0.11.0"
+
+"chess.mjs@^1.1.0", "chess.mjs@^1.1.1":
+  "integrity" "sha512-6WLXJ0RHJSn/VjCVAOE6N8mTNXChjrN+xOTOKnpF+v94eCULyRd5KfRNLvxxmxKKxCkck9VsquPirLT0nxH4og=="
+  "resolved" "https://registry.npmjs.org/chess.mjs/-/chess.mjs-1.2.0.tgz"
+  "version" "1.2.0"
 
 "chessboard-element@^1.1.0":
   "integrity" "sha1-byfGT1fskzOtE9cEvjgBKOOgpLM="
@@ -2700,10 +2740,32 @@
   "resolved" "https://registry.npm.taobao.org/clone/download/clone-2.1.2.tgz"
   "version" "2.1.2"
 
-"cm-chessboard@^3.9.14":
+"cm-chess@^1.3.17":
+  "integrity" "sha512-BNavgJ2CihZd73agn1hdsjbAIzChgJnWhGeqZc71UgdgwxgdWMbQa3D0+CpaguFKZaHJ1lP6Rmp2YeOPDEzi8g=="
+  "resolved" "https://registry.npmjs.org/cm-chess/-/cm-chess-1.4.3.tgz"
+  "version" "1.4.3"
+  dependencies:
+    "chess.mjs" "^1.1.1"
+    "cm-pgn" "^1.7.5"
+    "cm-web-modules" "^1.6.7"
+
+"cm-chessboard@^3.3.8", "cm-chessboard@^3.9.14":
   "integrity" "sha512-Xwto2H+H5NOBui5+sP/aMfqNRmmVjp2z6toMEQ3Ri+uKttMZz6dPPgSPRtVKbesXjeyz8bQE8xuX19/oAypaGw=="
   "resolved" "https://registry.npmjs.org/cm-chessboard/-/cm-chessboard-3.9.14.tgz"
   "version" "3.9.14"
+
+"cm-pgn@^1.7.5":
+  "integrity" "sha512-h/OQ6tF5gRknKeuc5l0b4SeIEHDfaJTZDuRZ/Yg/w2H2Kov0CxwF7XtYbpECsSGVmOouELt4aQFPGT7GSrhTIQ=="
+  "resolved" "https://registry.npmjs.org/cm-pgn/-/cm-pgn-1.8.2.tgz"
+  "version" "1.8.2"
+  dependencies:
+    "chess.mjs" "^1.1.0"
+    "cm-web-modules" "^1.3.4"
+
+"cm-web-modules@^1.3.4", "cm-web-modules@^1.6.7":
+  "integrity" "sha512-Gp8TtYVq7685K8lY7p8yMhxouG3ZNeGGBhnIh1uKGWRuCcT6gs1dWJ9szWuLAE6upgnT7cZ4QomffZMH9aJvuw=="
+  "resolved" "https://registry.npmjs.org/cm-web-modules/-/cm-web-modules-1.7.3.tgz"
+  "version" "1.7.3"
 
 "co@^4.6.0":
   "integrity" "sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ="
@@ -5342,7 +5404,7 @@
     "merge-stream" "^2.0.0"
     "supports-color" "^7.0.0"
 
-"jquery@^3.6.0", "jquery@>=3.4.1":
+"jquery@^3.5.1", "jquery@^3.6.0", "jquery@>=3.4.1", "jquery@1.9.1 - 3":
   "integrity" "sha1-xyoJ8Vwb3OFC9J2/EXC9+K2sJHA="
   "resolved" "https://registry.npm.taobao.org/jquery/download/jquery-3.6.0.tgz?cache=0&sync_timestamp=1614705639458&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjquery%2Fdownload%2Fjquery-3.6.0.tgz"
   "version" "3.6.0"
@@ -6670,6 +6732,11 @@
   "version" "1.6.4"
   dependencies:
     "ts-pnp" "^1.1.6"
+
+"popper.js@^1.16.1":
+  "integrity" "sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ=="
+  "resolved" "https://registry.npmjs.org/popper.js/-/popper.js-1.16.1.tgz"
+  "version" "1.16.1"
 
 "portfinder@^1.0.26":
   "integrity" "sha1-Z8RiKFK9U3TdHdkA93n1NGL6x3g="

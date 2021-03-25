@@ -7,7 +7,9 @@ import {
   BORDER_TYPE,
   PIECE,
 } from "cm-chessboard";
+import History from "./history";
 import Handle from "./handel";
+import ChessAi from "./ai";
 export default class ChessEngine {
   constructor(el) {
     this.$el = el;
@@ -80,6 +82,7 @@ export default class ChessEngine {
             // console.log(this.game);
             // console.log(this.game.turn());
             // console.log(move);
+            console.log(this.board);
             // console.log(this.board.getPiece());
 
             if (move === null) return;
@@ -89,8 +92,10 @@ export default class ChessEngine {
               event.chessboard.setPosition(this.game.fen());
             });
 
-            var bestPiece = this.calculateBestMove(this.game);
+            var bestPiece = new ChessAi(this.game,this.board).calculateBestMove();
+            var rdPiece = this.makeRandomPieceMove();
             console.log(bestPiece);
+            console.log(rdPiece);
             this.makeMove();
           } else {
           }
@@ -189,10 +194,5 @@ export default class ChessEngine {
     }, 500);
   }
 
-  // 开发最佳下棋的算法
-  calculateBestMove(game) {
-    //generate all the moves for a given position
-    var newGameMoves = game.moves();
-    return newGameMoves[Math.floor(Math.random() * newGameMoves.length)];
-  }
+
 }
