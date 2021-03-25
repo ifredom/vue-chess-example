@@ -4,9 +4,10 @@ import {
   MOVE_INPUT_MODE,
   INPUT_EVENT_TYPE,
   COLOR,
-  BORDER_TYPE
+  BORDER_TYPE,
+  PIECE,
 } from "cm-chessboard";
-
+import Handle from "./handel";
 export default class ChessEngine {
   constructor(el) {
     this.$el = el;
@@ -15,8 +16,10 @@ export default class ChessEngine {
     this.fen = "start";
     this.history = [];
     this.orientation = COLOR.white;
+    this.turn = "w";
     // 任意走步
     this.limitMove = false;
+    this.handel = null;
 
     this.initChessGame();
     this.init(el);
@@ -29,12 +32,12 @@ export default class ChessEngine {
         url: "./chessboard-sprite-staunty.svg", // 片段和标记作为svg存储在sprite中
         grid: 40, // 每一个棋子的尺寸
       },
-      orientation: COLOR.white,
-      moveInputMode: MOVE_INPUT_MODE.dragPiece,
+      // orientation: COLOR.white,
+      // moveInputMode: MOVE_INPUT_MODE.dragPiece,  // 废弃属性
       responsive: true,
       style: {
         cssClass: "chess-club",
-        borderType: BORDER_TYPE.frame,
+        // borderType: BORDER_TYPE.frame,
         aspectRatio: 0.9,
       },
       // animationDuration: 300,
@@ -53,25 +56,43 @@ export default class ChessEngine {
         this.board.addMarker(event.square);
       }
     });
-    this.enableBoardClick(this.board);
+    // 棋盘点击事件
+    this.board.enableBoardClick((event) => {
+      console.log("boardClick board", event);
+    });
+    // 移动事件
     this.board.enableMoveInput((event) => {
       switch (event.type) {
         case INPUT_EVENT_TYPE.moveStart:
           return true;
         case INPUT_EVENT_TYPE.moveDone:
-          if (!this.getLimitMove()) {
+          // console.log(event);
+          // console.log(`moveStart: ${event.square}`);
+
+          const turn = this.game.turn();
+
+          if (turn === "w") {
             const move = this.game.move({
               from: event.squareFrom,
               to: event.squareTo,
               promotion: "q",
             });
+            // console.log(this.game);
+            // console.log(this.game.turn());
+            // console.log(move);
+            // console.log(this.board.getPiece());
+
             if (move === null) return;
             this.fen = this.game.fen();
             this.history = this.game.history({ verbose: true });
             setTimeout(() => {
               event.chessboard.setPosition(this.game.fen());
             });
+            this.makeRandomMove();
+          } else {
+            
           }
+
           return true;
         case INPUT_EVENT_TYPE.moveCanceled:
           return null;
@@ -116,15 +137,48 @@ export default class ChessEngine {
   onPrimaryInput(event) {
     console.log(event);
   }
+
+  moveStart(piece) {
+    if (
+      this.game.in_checkmate() === true ||
+      this.game.in_draw() === true ||
+      piece.search(/^b/) !== -1
+    ) {
+      return false;
+    }
+  }
+
   /**
    *
-   * @param { fen字符串 } fen
-   * * 初始棋局设置
+   * * 设置一个棋子
    */
-  enableBoardClick(board) {
-    board.enableBoardClick((event) => {
-      console.log("boardClick board", event);
-    });
+  makeRandomMove() {
+    this.board.setPiece("e4", PIECE.blackKnight);
+    this.board.setPiece("e4", "bn");
+  }
+  /**
+   *
+   * * 随机走一步棋
+   */
+  makeRandomMove() {
+    var possibleMoves = this.game.moves();
+    var that = this;
+    // exit if the this.game is over
+    if (this.game.game_over()) return;
+
+    var randomIdx = Math.floor(Math.random() * possibleMoves.length);
+    this.game.move(possibleMoves[randomIdx]);
+    this.board.setPosition(this.game.fen());
+  }
+  /**
+   *
+   * * 循环随机走棋
+   */
+  loopMakeRandomMove() {
+    var that = this
+    window.setTimeout(() => {
+      that.makeRandomMove();
+    }, 500);
   }
 
   // 开发最佳下棋的算法

@@ -5,6 +5,7 @@
     <button @click="changeOrientation">changeOrientation</button>
     <button @click="clearPosition">清空</button>
     <button @click="setPosition">设置fen</button>
+    <button @click="makeRandomMove">随机走棋</button>
   </div>
 </template>
 
@@ -40,10 +41,11 @@ export default {
     this.onceAuthenticated();
   },
   methods: {
+    // https://jsfiddle.net/Laa0p1mh/3/ 制作AI
     onceAuthenticated() {
       var container = document.getElementById("board");
       this.chessEngine = new ChessEngine(container);
-      
+
       this.color = this.chessEngine.orientation;
     },
     changeOrientation() {
@@ -57,6 +59,9 @@ export default {
     },
     clearPosition() {
       this.chessEngine.setPosition();
+    },
+    makeRandomMove() {
+      this.chessEngine.loopMakeRandomMove()
     },
   },
 };
