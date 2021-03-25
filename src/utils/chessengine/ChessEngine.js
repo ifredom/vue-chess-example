@@ -35,8 +35,8 @@ export default class ChessEngine {
     this.board = new Chessboard(el, {
       position: this.game.fen(),
       sprite: {
-        url: "./chessboard-sprite-staunty.svg", // 片段和标记作为svg存储在sprite中
-        grid: 40, // 每一个棋子的尺寸
+        url: "./chessboard-sprite.svg",
+        grid: 40, // size
       },
       // responsive: true,
       // style: {

@@ -19,14 +19,14 @@ const routes = [
     name: 'chessboardelement',
     component: () => import('./view/chessboardelement'),
     meta: {
-      title: '棋盘1'
+      title: 'chessboardelement'
     }
   },
   {
     name: 'chessground',
     component: () => import('./view/chessground'),
     meta: {
-      title: '棋盘2'
+      title: 'chessground'
     }
   }
 ];
