@@ -80,31 +80,38 @@ export default class ChessAi {
   constructor(game, board) {
     this.game = game;
     this.board = board;
+    this.depth = 3 ; // 遍历深度， 1-5
   }
 
-  // /*The "AI" part starts here */
-  // 开发最佳下棋的算法
   calculateBestMove() {
-    //generate all the moves for a given position
+    // var bestMove = this.calculateBestMovefirstVersion(this.game);
+    var bestMove = this.minimaxRoot(this.depth, this.game, true);
+    return bestMove;
+  }
 
-    var newGameMoves = this.game.moves();
+  /**
+   *
+   * * 1.初步算法
+   * ? 生成所有可能移动的位置
+   */
+  calculateBestMovefirstVersion(game) {
+    var newGameMoves = game.moves();
+    console.log(newGameMoves);
     var bestMove = null;
-    //use any negative large number
+    // 任何负数
     var bestValue = -9999;
-    console.log(this.game.board());
     for (var i = 0; i < newGameMoves.length; i++) {
       var newGameMove = newGameMoves[i];
-      this.game.move(newGameMove);
+      game.move(newGameMove);
 
-      //take the negative as AI plays as black
-      var boardValue = -this.evaluateBoard(this.game.board());
-      this.game.undo();
+      // 当AI是黑子方时，用负值
+      var boardValue = -this.evaluateBoard(game.board());
+      game.undo();
       if (boardValue > bestValue) {
         bestValue = boardValue;
         bestMove = newGameMove;
       }
     }
-
     return bestMove;
   }
 
@@ -142,5 +149,74 @@ export default class ChessAi {
 
     var absoluteValue = getAbsoluteValue(piece, piece.color === "w", x, y);
     return piece.color === "w" ? absoluteValue : -absoluteValue;
+  }
+
+  /**
+   *
+   * * 2.第二阶段
+   * ? 生成所有可能移动的位置
+   */
+  minimaxRoot(depth, game, isMaximisingPlayer) {
+    var newGameMoves = game.moves();
+    var bestMove = -9999;
+    var bestMoveFound;
+
+    for (var i = 0; i < newGameMoves.length; i++) {
+      var newGameMove = newGameMoves[i];
+      game.move(newGameMove);
+      var value = this.minimax(
+        depth - 1,
+        game,
+        -10000,
+        10000,
+        !isMaximisingPlayer
+      );
+      game.undo();
+      if (value >= bestMove) {
+        bestMove = value;
+        bestMoveFound = newGameMove;
+      }
+    }
+    return bestMoveFound;
+  }
+
+  minimax(depth, game, alpha, beta, isMaximisingPlayer) {
+    if (depth === 0) {
+      return -this.evaluateBoard(game.board());
+    }
+
+    var newGameMoves = game.moves();
+
+    if (isMaximisingPlayer) {
+      var bestMove = -9999;
+      for (var i = 0; i < newGameMoves.length; i++) {
+        game.move(newGameMoves[i]);
+        bestMove = Math.max(
+          bestMove,
+          this.minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer)
+        );
+        game.undo();
+        alpha = Math.max(alpha, bestMove);
+        if (beta <= alpha) {
+          return bestMove;
+        }
+      }
+      return bestMove;
+    } else {
+      var bestMove = 9999;
+      for (var i = 0; i < newGameMoves.length; i++) {
+        game.move(newGameMoves[i]);
+        bestMove = Math.min(
+          bestMove,
+          this.minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer)
+        );
+        game.undo();
+        beta = Math.min(beta, bestMove);
+        if (beta <= alpha) {
+          return bestMove;
+        }
+      }
+      return bestMove;
+    }
   }
 }

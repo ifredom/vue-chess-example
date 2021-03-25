@@ -44,10 +44,8 @@ export default class ChessEngine {
       },
       // animationDuration: 300,
     });
-    console.log(this.board);
 
     this.board.enableContextInput((event) => {
-      console.log(event);
       const markersOnSquare = this.board.getMarkers(
         event.square,
         MARKER_TYPE.emphasize
@@ -58,19 +56,17 @@ export default class ChessEngine {
         this.board.addMarker(event.square);
       }
     });
-    // 棋盘点击事件
+
     this.board.enableBoardClick((event) => {
       console.log("boardClick board", event);
     });
-    // 移动事件
+
     this.board.enableMoveInput((event) => {
       switch (event.type) {
         case INPUT_EVENT_TYPE.moveStart:
+          this.moveStart(this.game, event.square);
           return true;
         case INPUT_EVENT_TYPE.moveDone:
-          // console.log(event);
-          // console.log(`moveStart: ${event.square}`);
-
           const turn = this.game.turn();
 
           if (turn === "w") {
@@ -83,20 +79,21 @@ export default class ChessEngine {
             // console.log(this.game.turn());
             // console.log(move);
             console.log(this.board);
-            // console.log(this.board.getPiece());
 
             if (move === null) return;
             this.fen = this.game.fen();
             this.history = this.game.history({ verbose: true });
-            setTimeout(() => {
-              event.chessboard.setPosition(this.game.fen());
-            });
 
-            var bestPiece = new ChessAi(this.game,this.board).calculateBestMove();
-            var rdPiece = this.makeRandomPieceMove();
-            console.log(bestPiece);
-            console.log(rdPiece);
-            this.makeMove();
+            var bestPiece = new ChessAi(
+              this.game,
+              this.board
+            ).calculateBestMove();
+            var randomPiece = this.makeRandomPieceMove();
+
+            this.makeMove(bestPiece);
+            // setTimeout(() => {
+            //   event.chessboard.setPosition(this.game.fen());
+            // });
           } else {
           }
 
@@ -145,10 +142,10 @@ export default class ChessEngine {
     console.log(event);
   }
 
-  moveStart(piece) {
+  moveStart(game, piece) {
     if (
-      this.game.in_checkmate() === true ||
-      this.game.in_draw() === true ||
+      game.in_checkmate() === true ||
+      game.in_draw() === true ||
       piece.search(/^b/) !== -1
     ) {
       return false;
@@ -182,6 +179,7 @@ export default class ChessEngine {
     var randomPiece = bestPiece ? bestPiece : this.makeRandomPieceMove();
     this.game.move(randomPiece);
     this.board.setPosition(this.game.fen());
+    this.renderMoveHistory(this.game.history());
   }
   /**
    *
@@ -194,5 +192,12 @@ export default class ChessEngine {
     }, 500);
   }
 
+  getMovesHistory() {
+    return this.game.history();
+  }
+  renderMoveHistory(target) {
+    var history = this.getMovesHistory();
 
+    return this.game.history();
+  }
 }

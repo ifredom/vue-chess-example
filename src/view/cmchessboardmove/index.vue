@@ -2,10 +2,14 @@
   <div>
     <h3>Playing {{ color == "w" ? "white" : "black" }}</h3>
     <div ref="board" id="board"></div>
+    <ul id="move-history">
+      <li v-for="item in history"></li>
+    </ul>
     <button @click="changeOrientation">changeOrientation</button>
     <button @click="clearPosition">清空</button>
     <button @click="setPosition">设置fen</button>
     <button @click="makeRandomMove">随机走棋</button>
+    <button @click="renderMoveHistory">历史记录</button>
   </div>
 </template>
 
@@ -35,6 +39,7 @@ export default {
     return {
       color: "",
       chessEngine: null,
+      history: [],
     };
   },
   mounted() {
@@ -62,6 +67,10 @@ export default {
     },
     makeRandomMove() {
       this.chessEngine.loopMakeMove();
+    },
+    renderMoveHistory() {
+      this.history = this.chessEngine.getMovesHistory();
+      console.log(this.history);
     },
   },
 };
