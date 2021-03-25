@@ -58,6 +58,7 @@ yarn lint
 
 - [FEN](https://www.xqbase.com/protocol/pgnfen2.htm) 白字大写，黑子小写
 - PGN
+- SAN (标准代数符号) 中传递字符串
 - `王车易位`（王车易位须满足以下条件）：
 
 * 王与要进行易位的车都未经移动。

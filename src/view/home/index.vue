@@ -36,7 +36,7 @@ export default {
   methods: {
     authenticate() {
       const token = "ifredom";
-      this.socket = new WebChessSocket(token);
+      // this.socket = new WebChessSocket(token);
     },
   },
 };

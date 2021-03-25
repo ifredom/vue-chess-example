@@ -2,9 +2,8 @@
   <div>
     <h3>Playing {{ color == "w" ? "white" : "black" }}</h3>
     <div ref="board" id="board"></div>
-    <ul id="move-history">
-      <li v-for="item in history"></li>
-    </ul>
+    <ul id="move-history"></ul>
+    <div id="time"></div>
     <button @click="changeOrientation">changeOrientation</button>
     <button @click="clearPosition">清空</button>
     <button @click="setPosition">设置fen</button>

@@ -77,16 +77,31 @@ var kingEvalWhite = [
 var kingEvalBlack = reverseArray(kingEvalWhite);
 
 export default class ChessAi {
-  constructor(game, board) {
+  constructor(game) {
     this.game = game;
-    this.board = board;
-    this.depth = 3 ; // 遍历深度， 1-5
+    this.depth = 3; // 遍历深度， 1-5
   }
 
-  calculateBestMove() {
-    // var bestMove = this.calculateBestMovefirstVersion(this.game);
-    var bestMove = this.minimaxRoot(this.depth, this.game, true);
+  /**
+   *
+   * * 生成最优piece
+   */
+  makeBestPieceMove() {
+    // var bestMove = this.calculateBestMovefirstVersion(this.game); // 第一版
+    var bestMove = this.minimaxRoot(this.depth, this.game, true); // 第二版
     return bestMove;
+  }
+
+  /**
+   * @param { game } 
+   * * 生成随机piece
+   */
+  makeRandomPieceMove() {
+    var possibleMoves = this.game.moves();
+    // 游戏结束则退出
+    if (this.game.game_over()) return;
+    var randomIdx = Math.floor(Math.random() * possibleMoves.length);
+    return possibleMoves[randomIdx];
   }
 
   /**
@@ -160,7 +175,6 @@ export default class ChessAi {
     var newGameMoves = game.moves();
     var bestMove = -9999;
     var bestMoveFound;
-
     for (var i = 0; i < newGameMoves.length; i++) {
       var newGameMove = newGameMoves[i];
       game.move(newGameMove);

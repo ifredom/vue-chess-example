@@ -7,7 +7,7 @@ import {
   BORDER_TYPE,
   PIECE,
 } from "cm-chessboard";
-import History from "./history";
+// import History from "./history";
 import Handle from "./handel";
 import ChessAi from "./ai";
 export default class ChessEngine {
@@ -22,26 +22,28 @@ export default class ChessEngine {
     // 任意走步
     this.limitMove = false;
     this.handel = null;
+    this.instance = null;
 
-    this.initChessGame();
+    this.game = new Chess();
+    this.chessAi = null;
+
     this.init(el);
   }
 
   init(el) {
+    var that = this;
     this.board = new Chessboard(el, {
       position: this.game.fen(),
       sprite: {
         url: "./chessboard-sprite-staunty.svg", // 片段和标记作为svg存储在sprite中
         grid: 40, // 每一个棋子的尺寸
       },
-      // orientation: COLOR.white,
-      // moveInputMode: MOVE_INPUT_MODE.dragPiece,  // 废弃属性
-      responsive: true,
-      style: {
-        cssClass: "chess-club",
-        // borderType: BORDER_TYPE.frame,
-        aspectRatio: 0.9,
-      },
+      // responsive: true,
+      // style: {
+      //   cssClass: "chess-club",
+      //   borderType: BORDER_TYPE.frame,
+      //   aspectRatio: 0.9,
+      // },
       // animationDuration: 300,
     });
 
@@ -56,6 +58,7 @@ export default class ChessEngine {
         this.board.addMarker(event.square);
       }
     });
+    var chessAi = (this.chessAi = new ChessAi(this.game, this.board));
 
     this.board.enableBoardClick((event) => {
       console.log("boardClick board", event);
@@ -75,25 +78,26 @@ export default class ChessEngine {
               to: event.squareTo,
               promotion: "q",
             });
-            // console.log(this.game);
-            // console.log(this.game.turn());
-            // console.log(move);
-            console.log(this.board);
 
             if (move === null) return;
             this.fen = this.game.fen();
             this.history = this.game.history({ verbose: true });
 
-            var bestPiece = new ChessAi(
-              this.game,
-              this.board
-            ).calculateBestMove();
-            var randomPiece = this.makeRandomPieceMove();
+            var d = new Date().getTime();
+            console.log("here1");
+            var bestPiece = chessAi.makeBestPieceMove();
+            // var randomPiece = chessAi.makeRandomPieceMove(); // 生成随机步数
+            var d2 = new Date().getTime();
+
+            var aiMoveTime = d2 - d; // AI用时
+            console.log(aiMoveTime);
 
             this.makeMove(bestPiece);
+
             // setTimeout(() => {
-            //   event.chessboard.setPosition(this.game.fen());
-            // });
+            // that.makeMove(bestPiece);
+            // event.chessboard.setPosition(this.game.fen());
+            // }, 250);
           } else {
           }
 
@@ -112,9 +116,6 @@ export default class ChessEngine {
     return this.limitMove;
   }
 
-  initChessGame() {
-    this.game = new Chess();
-  }
   /**
    *
    * @param { black | white } mode
@@ -162,24 +163,12 @@ export default class ChessEngine {
   }
   /**
    *
-   * * 生成随机步数
+   * * 移动一步棋子
    */
-  makeRandomPieceMove() {
-    var possibleMoves = this.game.moves();
-    // 游戏结束则退出
-    if (this.game.game_over()) return;
-    var randomIdx = Math.floor(Math.random() * possibleMoves.length);
-    return possibleMoves[randomIdx];
-  }
-  /**
-   *
-   * * 走一步棋
-   */
-  makeMove(bestPiece) {
-    var randomPiece = bestPiece ? bestPiece : this.makeRandomPieceMove();
-    this.game.move(randomPiece);
+  makeMove(piece) {
+    this.game.move(piece);
     this.board.setPosition(this.game.fen());
-    this.renderMoveHistory(this.game.history());
+    // this.renderMoveHistory(this.game.history());
   }
   /**
    *
@@ -187,17 +176,13 @@ export default class ChessEngine {
    */
   loopMakeMove() {
     var that = this;
-    window.setTimeout(() => {
-      that.makeMove();
+    window.setInterval(() => {
+      var randomPiece = that.chessAi.makeRandomPieceMove();
+      that.makeMove(randomPiece);
     }, 500);
   }
 
-  getMovesHistory() {
-    return this.game.history();
-  }
-  renderMoveHistory(target) {
-    var history = this.getMovesHistory();
-
-    return this.game.history();
+  renderMoveHistory(history) {
+    return history;
   }
 }
