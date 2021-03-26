@@ -2,7 +2,13 @@
   <div>
     <h3>Playing {{ color == "w" ? "white" : "black" }}</h3>
     <div ref="board" id="board"></div>
-    <ul id="move-history"></ul>
+    <ul id="move-history">
+      <li
+        v-for="(item, index) in history"
+        :key="index + 'item'"
+        v-text="item"
+      ></li>
+    </ul>
     <div id="time"></div>
     <button @click="changeOrientation">changeOrientation</button>
     <button @click="clearPosition">清空</button>
@@ -14,7 +20,7 @@
 
 <script>
 import "cm-chessboard/styles/cm-chessboard.css";
-
+import { COLOR, INPUT_EVENT_TYPE } from "cm-chessboard";
 import {
   WebChessSocket,
   SocketEmitMessage,
@@ -36,26 +42,28 @@ export default {
   },
   data() {
     return {
-      color: "",
+      color: "white",
       chessEngine: null,
       history: [],
     };
   },
   mounted() {
-    this.onceAuthenticated();
+    this.initMounted();
   },
   methods: {
     // https://jsfiddle.net/Laa0p1mh/3/ 制作AI
-    onceAuthenticated() {
+    async initMounted() {
+      var that = this;
       var container = document.getElementById("board");
-      this.chessEngine = new ChessEngine(container);
+      this.chessEngine = await new ChessEngine(container);
 
-      this.color = this.chessEngine.orientation;
+      this.chessEngine.event.on("history", (data) => {
+        console.log(data);
+        that.history = data;
+      });
     },
     changeOrientation() {
-      this.color = this.color === "white" ? "black" : "white";
-      console.log(this.color);
-
+      this.color = this.chessEngine.board.getOrientation();
       this.chessEngine.changeOrientation(this.color);
     },
     setPosition() {

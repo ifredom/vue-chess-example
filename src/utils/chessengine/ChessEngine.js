@@ -1,4 +1,5 @@
 import Chess from "chess.js";
+import EventEmitter from "events";
 import {
   Chessboard,
   MOVE_INPUT_MODE,
@@ -28,6 +29,8 @@ export default class ChessEngine {
 
     this.game = new Chess();
     this.chessAi = null;
+
+    this.event = new EventEmitter();
 
     this.init(el);
   }
@@ -62,10 +65,10 @@ export default class ChessEngine {
     });
     var chessAi = (this.chessAi = new ChessAi(this.game, this.board));
 
-    console.log(this.board);
-    // this.board.enableBoardClick((event) => {
-    //   console.log("boardClick board", event);
-    // });
+    // console.log(this.board);
+    this.board.enableBoardClick((event) => {
+      console.log("boardClick board", event);
+    });
 
     this.board.enableMoveInput((event) => {
       switch (event.type) {
@@ -87,20 +90,14 @@ export default class ChessEngine {
             this.history = this.game.history({ verbose: true });
 
             var d = new Date().getTime();
-            console.log("here1");
             var bestPiece = chessAi.makeBestPieceMove();
             // var randomPiece = chessAi.makeRandomPieceMove(); // 生成随机步数
             var d2 = new Date().getTime();
-
             var aiMoveTime = d2 - d; // AI用时
-            console.log(aiMoveTime);
 
             this.makeMove(bestPiece);
 
-            // setTimeout(() => {
-            // that.makeMove(bestPiece);
-            // event.chessboard.setPosition(this.game.fen());
-            // }, 250);
+            this.event.emit("history", this.game.history());
           } else {
           }
 
@@ -124,9 +121,9 @@ export default class ChessEngine {
    * @param { black | white } mode
    * * 模式设置： 黑子在下 或者 白子在下
    */
-  changeOrientation(orientation = "black") {
-    console.log(orientation);
-    this.board.setOrientation(orientation);
+  changeOrientation(orientation = "w") {
+    const result = orientation === "w" ? "b" : "w";
+    this.board.setOrientation(result);
   }
 
   /**
@@ -171,7 +168,6 @@ export default class ChessEngine {
   makeMove(piece) {
     this.game.move(piece);
     this.board.setPosition(this.game.fen());
-    // this.renderMoveHistory(this.game.history());
   }
   /**
    *
@@ -183,9 +179,5 @@ export default class ChessEngine {
       var randomPiece = that.chessAi.makeRandomPieceMove();
       that.makeMove(randomPiece);
     }, 500);
-  }
-
-  renderMoveHistory(history) {
-    return history;
   }
 }

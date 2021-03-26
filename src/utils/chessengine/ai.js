@@ -87,8 +87,8 @@ export default class ChessAi {
    * * 生成最优piece
    */
   makeBestPieceMove() {
-    // var bestMove = this.calculateBestMovefirstVersion(this.game); // 第一版
-    var bestMove = this.minimaxRoot(this.depth, this.game, true); // 第二版
+    var bestMove = this.calculateBestMovefirstVersion(this.game); // 第一版
+    // var bestMove = this.minimaxRoot(this.depth, this.game, true); // 第二版
     return bestMove;
   }
 

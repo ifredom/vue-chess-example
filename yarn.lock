@@ -3989,9 +3989,9 @@
   "resolved" "https://registry.npm.taobao.org/eventemitter3/download/eventemitter3-4.0.7.tgz?cache=0&sync_timestamp=1598517795415&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feventemitter3%2Fdownload%2Feventemitter3-4.0.7.tgz"
   "version" "4.0.7"
 
-"events@^3.0.0":
-  "integrity" "sha1-Mala0Kkk4tLEGagTrrLE6HjqdAA="
-  "resolved" "https://registry.npm.taobao.org/events/download/events-3.3.0.tgz"
+"events@^3.0.0", "events@^3.3.0":
+  "integrity" "sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q=="
+  "resolved" "https://registry.npmjs.org/events/-/events-3.3.0.tgz"
   "version" "3.3.0"
 
 "eventsource@^1.0.7":
