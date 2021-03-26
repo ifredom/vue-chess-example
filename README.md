@@ -1,63 +1,46 @@
-# chess-internatinal ( 国际象棋 )
+# chessboard 国际象棋
 
-- 1. 人机对弈 （√）
-- 2. 联网对战
+- cm-chessboard
+- chess.js
 
 
-> history 记录历史，复盘
-> 调用 stockfish 进行局面分析
-> 棋库
 
-## Steps involved
+> Tips(注意)： 客户端 如果在yarn serve服务器下，会一直刷新，导致socket连接不上服务端，所以 客户端 执行 `yarn build`后，使用`http-server -p 8089`启动一个静态服务器，则可以正常连接到socket
+## Frontend 客户端
 
-- 1.移动生成
+- cm-chessboard
+- chess.js
 
-- 2. 局面评估 MB = Sum (Np x Vp),Np 是棋盘上这种类型的子的数目，Vp 是子的价值
-
-- 3. 极大极小算法
-
-- 4. α-β 剪枝
-
-## How to use? ( 如何使用? )
+> how to use? (如何使用)
 
 ```json
+cd Frontend
 
 yarn install
 
 yarn serve
 
 yarn build
-
 ```
 
-## 开发须知
+## Backend 客户端
 
-**README-development.md** 文件
+- express
+- websocket
+- chess.js
+- nodemon ( Real time refresh，实时刷新 )
 
-### 走棋规则
+> how to use? (如何使用)
 
-> 比赛规则： 棋盘每边 8 个方格，白先黑后，一盘右下角一定是白色，白王在白格，黑王在黑格
-> king, queen, rook, bishop, knight, pawn
+```json
 
-- 王(k)： 横竖斜都可以走，每次限制一步
-- 后(q)： 横竖斜都可以走，步数不限制，但不能越子
-- 车(r)： 横竖均可以走，步数不受限制
-- 象(b)： 只能斜走，格数不限，不能越子
-- 马(k)： 走“日”字
-- 兵(p)： 只能向前，每次只能一格。第一步时可以走 2 格或者 1 格
+cd Backend
 
-### 国际象棋须知
+npm install
 
-- [FEN](https://www.xqbase.com/protocol/pgnfen2.htm) 白字大写，黑子小写
-- PGN
-- SAN (标准代数符号) 中传递字符串
-- `王车易位`（王车易位须满足以下条件）：
+nodemon
+```
+### 可能遇到的问题
 
-* 王与要进行易位的车都未经移动。
-  王与要进行易位的车之间没有其他棋子阻隔。
-  王所在、经过和到达的格子皆未受到攻击（即易位时与易位后不能被照将，也不能穿越被对方控制的格子）。
-  王与要进行易位的车必须位处同一横行（即不能与王前兵升变所成之车易位）。[1]
-  一常见误解是王车易位的规则比以上还要严格，事实上：
-  即使王之前曾被将军，但于易位时未被将军，仍可进行易位。
-  车被攻击不妨碍易位。
-  车可以穿越被攻击的格子（只适用于长易位）。
+> 1. Importing Stockfish into App: Uncaught SyntaxError: Unexpected token '<'
+>    > This is because stockfish is introduced with commonjs, which is problematic. Using script to introduce(这是因为 stockfish 使用 commonJS 方式引入导致的。使用 script 标签引入则没有问题)
