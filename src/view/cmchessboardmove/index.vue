@@ -2,13 +2,7 @@
   <div>
     <h3>Playing {{ color == "w" ? "white" : "black" }}</h3>
     <div ref="board" id="board"></div>
-    <ul id="move-history">
-      <li
-        v-for="(item, index) in history"
-        :key="index + 'item'"
-        v-text="item"
-      ></li>
-    </ul>
+    <ChessHistory :history="history" />
     <div id="time"></div>
     <button @click="changeOrientation">changeOrientation</button>
     <button @click="clearPosition">清空</button>
@@ -26,11 +20,12 @@ import {
   SocketEmitMessage,
   SocketReceiveMessage,
 } from "@/utils/WebChessSocket";
+import ChessHistory from "@/components/ChessHistory";
 import { ChessEngine } from "@/utils/chessengine";
 import { fens } from "@/utils/fens";
 export default {
   name: "cmchessboardmove",
-  components: {},
+  components: { ChessHistory },
   props: {
     authenticated: {
       type: Boolean,

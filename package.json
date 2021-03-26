@@ -22,6 +22,8 @@
     "cm-chessboard": "^3.9.14",
     "core-js": "^3.4.3",
     "events": "^3.3.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
     "socket.io-client": "^4.0.0",
     "vant": "^2.2.0",
     "vue": "^2.6.10",
